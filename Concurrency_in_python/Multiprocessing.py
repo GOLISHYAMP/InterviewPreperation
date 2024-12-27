@@ -120,13 +120,85 @@
 
 ###########################################################################
 
+# from multiprocessing import Pool
+
+# def square(x):
+#     return x * x
+
+# if __name__ == "__main__":
+#     data = [1, 2, 3, 4, 5]
+#     with Pool(processes=4) as p:
+#         results = p.map(square, data)
+#     print(results)
+
+###############################################################################
+
+# from multiprocessing import Process, Lock
+
+# def critical_section(lock, task_id):
+#     # with lock:  # Automatically acquires and releases the lock
+#     print(f"Task {task_id} entering critical section")
+#     print(f"Task {task_id} leaving critical section")
+
+# if __name__ == "__main__":
+#     lock = Lock()
+#     processes = [Process(target=critical_section, args=(lock, i)) for i in range(4)]
+
+#     for p in processes:
+#         p.start()
+#     for p in processes:
+#         p.join()
+
+
+################################################################################
+
+# from multiprocessing import Process, Manager
+
+# def update_shared_list(shared_list, value):
+#     shared_list.append(value)
+
+# if __name__ == "__main__":
+#     with Manager() as manager:
+#         shared_list = manager.list()  # Shared list
+#         processes = [Process(target=update_shared_list, args=(shared_list, i)) for i in range(5)]
+
+#         for p in processes:
+#             p.start()
+#         for p in processes:
+#             p.join()
+
+#         print("Updated shared list:", list(shared_list))
+
+################################################################################
+
+# from multiprocessing import Process
+# import time
+
+# def infinite_loop():
+#     while True:
+#         print("Running...")
+#         time.sleep(1)
+
+# if __name__ == "__main__":
+#     p = Process(target=infinite_loop)
+#     p.start()
+#     time.sleep(5)  # Let the process run for 5 seconds
+#     p.terminate()  # Terminate the process
+#     print("Process terminated")
+
+
+#################################################################
+
+
 from multiprocessing import Pool
 
-def square(x):
-    return x * x
+def divide(x, y):
+    return x / y
 
 if __name__ == "__main__":
-    data = [1, 2, 3, 4, 5]
-    with Pool(processes=4) as p:
-        results = p.map(square, data)
-    print(results)
+    with Pool(processes=4) as pool:
+        results = pool.apply_async(divide, args=(1, 0))
+        try:
+            print(results.get())  # This will raise a ZeroDivisionError
+        except ZeroDivisionError as e:
+            print(f"Caught exception: {e}")
