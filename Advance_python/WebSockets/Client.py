@@ -5,13 +5,15 @@ PORT = 5050
 HEADER = 64
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = '!DISCONNECT'
-SERVER = "192.168.0.103"
+SERVER = "192.168.0.103" # Replace with server IP
 ADDR = (SERVER, PORT)
 
-client = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
-def send(msg):
+
+def send_message(msg):
+    """Send a message to the server."""
     message = msg.encode(FORMAT)
     msg_length = len(message)
     send_length = str(msg_length).encode(FORMAT)
@@ -20,4 +22,28 @@ def send(msg):
     client.send(message)
 
 
-send("Hello World!!!")
+def receive_messages():
+    """Continuously listen for messages from the server."""
+    while True:
+        try:
+            message = client.recv(2048).decode(FORMAT)
+            print(message)
+        except Exception as e:
+            print(f"[ERROR] Connection lost: {e}")
+            break
+
+
+# Start a thread to listen for incoming messages
+receive_thread = threading.Thread(target=receive_messages, daemon=True)
+receive_thread.start()
+
+print("Type your messages below. Type 'exit' to exit.")
+while True:
+    message = input()
+    if message == 'exit':
+        send_message(DISCONNECT_MESSAGE)
+        break
+    send_message(message)
+
+
+client.close()
