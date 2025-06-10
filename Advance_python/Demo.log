@@ -1,3 +1,8 @@
-2024-12-29 12:06:50,672 - ERROR - Second log
-2024-12-29 12:06:50,672 - CRITICAL - Third log
-2024-12-29 12:06:50,672 - WARNING - fifth log
+2025-06-05 17:15:07,142 - INFO - This is an info message
+2025-06-05 17:15:07,142 - INFO - This is an info message
+2025-06-05 17:15:07,143 - WARNING - This is a warning message
+2025-06-05 17:15:07,143 - WARNING - This is a warning message
+2025-06-05 17:15:07,146 - ERROR - This is an error message
+2025-06-05 17:15:07,146 - ERROR - This is an error message
+2025-06-05 17:15:07,146 - CRITICAL - This is a critical message
+2025-06-05 17:15:07,146 - CRITICAL - This is a critical message

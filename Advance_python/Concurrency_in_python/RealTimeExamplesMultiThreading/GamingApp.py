@@ -17,7 +17,7 @@ def game_loop():
         print(f"Game frame {i}")
         time.sleep(1)
 
-music_thread = threading.Thread(target=play_music, daemon=True)
+music_thread = threading.Thread(target=play_music, daemon=True)  # this thread cannot run individually
 music_thread.start()
 
 game_loop()

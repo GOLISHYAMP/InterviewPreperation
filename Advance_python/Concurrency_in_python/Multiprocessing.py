@@ -52,19 +52,15 @@
 # import time
 
 # def sender(conn):
-#     for _ in range(5):
-#         time.sleep(0.5)
-#         conn.send("Hello from Sender!")
-#         message = conn.recv()
-#         print('message recieved at sender process : ',message)
+#     conn.send("Hello from Sender!")
+#     message = conn.recv()
+#     print('message recieved at sender process : ',message)
 #     # conn.close()
 
 # def receiver(conn):
-#     for _ in range(5):
-#         time.sleep(0.75)
-#         message = conn.recv()
-#         print(f"Received: {message}")
-#         conn.send("Hii from the receiver")
+#     message = conn.recv()
+#     print(f"Received: {message}")
+#     conn.send("Hii from the receiver")
 
 
 # if __name__ == "__main__":
@@ -106,7 +102,7 @@
 #         shared_array[i] = shared_array[i] ** k
 
 # if __name__ == "__main__":
-#     shared_array = Array('i', [1, 2, 3, 4, 5])  # 'i' indicates integer type
+#     shared_array = Array('i', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])  # 'i' indicates integer type
 #     p1 = Process(target=square_elements, args=(shared_array,2))
 #     p2 = Process(target=square_elements, args=(shared_array,3))
 
@@ -126,9 +122,10 @@
 #     return x * x
 
 # if __name__ == "__main__":
-#     data = [1, 2, 3, 4, 5]
+#     # data = [1, 2, 3, 4, 5]
 #     with Pool(processes=4) as p:
 #         results = p.map(square, data)
+#         # results = p.apply(square, args=(5, ))
 #     print(results)
 
 ###############################################################################
@@ -190,15 +187,48 @@
 #################################################################
 
 
-from multiprocessing import Pool
+# from multiprocessing import Pool
 
-def divide(x, y):
-    return x / y
+# def divide(x, y):
+#     return x / y
 
-if __name__ == "__main__":
-    with Pool(processes=4) as pool:
-        results = pool.apply_async(divide, args=(1, 0))
-        try:
-            print(results.get())  # This will raise a ZeroDivisionError
-        except ZeroDivisionError as e:
-            print(f"Caught exception: {e}")
+# if __name__ == "__main__":
+#     with Pool(processes=4) as pool:
+#         results = pool.apply_async(divide, args=(1, 0))
+#         try:
+#             print(results.get())  # This will raise a ZeroDivisionError
+#         except ZeroDivisionError as e:
+#             print(f"Caught exception: {e}")
+
+# from multiprocessing import Process, Value
+# import time
+
+# def increment(shared_value):
+#     # for _ in range(1000):
+#     shared_value.value += 1
+
+# if __name__ == "__main__":
+#     shared_value = Value('i', 0)  # 'i' indicates integer type
+#     processes = [Process(target=increment, args=(shared_value,)) for _ in range(4)]
+    
+#     for p in processes:
+#         p.start()
+#     for p in processes:
+#         p.join()
+
+#     print(f"Final Value: {shared_value.value}")
+
+
+##################################################################
+from concurrent.futures import ThreadPoolExecutor
+import time
+def func(i):
+    for i in range(100):
+        i += 1
+    return i
+
+with ThreadPoolExecutor(max_workers=3) as executor:
+    futures = executor.map(func, range(10))
+    time.sleep(5)
+    # results = [future.result() for future in futures]
+print(futures)

@@ -7,3 +7,9 @@ Get a particular store  GET /stores/My_store
 Get only a item in a store   GET /stores/My_store/item
 
 So, we will create the 5 endpoints.
+
+
+I Created a file .flaskenv which is used to set the environment variables needed by the flask to run.
+FLASK_APP=app
+<!-- FLASK_ENV=development -->
+FLASK_DEBUG=1

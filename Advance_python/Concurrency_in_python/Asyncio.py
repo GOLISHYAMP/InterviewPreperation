@@ -24,23 +24,24 @@ import time
 
 ################################################################
 # # Tasks
-# async def func(id, sleep_time):
-#     print(f"coroutine {id} executing")
-#     await asyncio.sleep(sleep_time)
-#     print(f'coroutine {id} done')
+async def func(id, sleep_time):
+    print(f"coroutine {id} executing")
+    await asyncio.sleep(sleep_time)
+    print(f'coroutine {id} done')
 
-# async def main():
-#     task1 = asyncio.create_task(func(1, 1))
-#     task2 = asyncio.create_task(func(2, 3))
-#     task3 = asyncio.create_task(func(3, 2))
-#     await task1
-#     await task2
-#     await task3
+async def main():
+    task1 = asyncio.create_task(func(1, 1))
+    task2 = asyncio.create_task(func(2, 3))
+    task3 = asyncio.create_task(func(3, 2))
+    print("task started")
+    await task1
+    await task2
+    await task3
 
-# start = time.time()
-# asyncio.run(main())
-# print(time.time() - start)
-# print("All tasks are done")
+start = time.time()
+asyncio.run(main())
+print(time.time() - start)
+print("All tasks are done")
 
 # Problem here is multiple create_task statements to be needed
 # So to over come  this problem we come up with asyncio.gather()
@@ -87,8 +88,8 @@ import time
 #################################################################################
 # Future is just a another feature, which promises the result is coming soon.
 # async def set_future_value(fut):
-#     await asyncio.sleep(2)
 #     fut.set_result("Future is done!")
+#     await asyncio.sleep(3)
 
 # async def main():
 #    future = asyncio.Future()

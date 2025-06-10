@@ -3,6 +3,15 @@
 
 import threading
 import cv2
+import time
+
+def func():
+    count = 0
+    while count < 20:
+        print("hello")
+        time.sleep(2)
+        count += 1
+
 
 def process_frames():
     cap = cv2.VideoCapture(0)
@@ -18,4 +27,8 @@ def process_frames():
     cv2.destroyAllWindows()
 
 thread = threading.Thread(target=process_frames)
+printthread = threading.Thread(target=func)
 thread.start()
+printthread.start()
+thread.join()
+printthread.join()
